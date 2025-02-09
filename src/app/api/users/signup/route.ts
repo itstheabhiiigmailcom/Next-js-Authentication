@@ -2,6 +2,7 @@ import { connect } from '../../../../dbConfig/dbConfig';
 import User from '../../../../models/userModel';
 import { NextRequest, NextResponse } from 'next/server';
 import bcryptjs from 'bcryptjs';
+import { sendEmail } from '@/helpers/mailer';
 
 connect();
 
@@ -10,8 +11,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const reqBody: { username: string; email: string; password: string } =
       await request.json();
     const { username, email, password } = reqBody;
-
-    console.log('Request body inside signup route.ts:', reqBody);
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -29,7 +28,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Create and save new user
     const newUser = new User({ username, email, password: hashedPassword });
     const savedUser = await newUser.save();
-    console.log('Saved user:', savedUser);
+
+    // send verification email
+    await sendEmail({ email, emailType: 'VERIFY', userId: savedUser._id });
 
     return NextResponse.json({
       message: 'User created successfully',

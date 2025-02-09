@@ -34,30 +34,37 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>Profile</h1>
-      <hr />
-      <p>Profile page</p>
-      <h2 className="p-1 rounded bg-green-500">
-        {data === 'nothing' ? (
-          'nothing'
-        ) : (
-          <Link href={`/profile/${data}`}>{data}</Link>
-        )}
-      </h2>
-      <hr />
-      <button
-        onClick={logout}
-        className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Logout
-      </button>
-      <button
-        onClick={getUserDetails}
-        className="bg-green-700 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Get Details
-      </button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 text-center">
+        <h1 className="text-3xl font-bold text-gray-800">Profile</h1>
+        <p className="text-gray-600 mt-2">Welcome to your profile page</p>
+        <hr className="my-4 border-gray-300" />
+
+        <h2 className="p-2 text-lg font-semibold bg-green-500 text-white rounded-lg">
+          {data === 'nothing' ? (
+            'Nothing to display'
+          ) : (
+            <Link href={`/profile/${data}`} className="hover:underline">
+              {data}
+            </Link>
+          )}
+        </h2>
+
+        <div className="mt-6 flex flex-col space-y-4">
+          <button
+            onClick={logout}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+          >
+            Logout
+          </button>
+          <button
+            onClick={getUserDetails}
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+          >
+            Get Details
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
